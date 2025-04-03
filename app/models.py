@@ -1,10 +1,17 @@
-from sqlalchemy import Integer, String, Boolean, Column
+from sqlalchemy import String
+from sqlalchemy.orm import mapped_column, Mapped ,reconstructor
+#from sqlalchemy.orm import Inte
+
 from app.database import Base
 
 
+
 class User(Base):
-    __tablename__="users"
-    id = Column(Integer, primary_key=True)
-    username = Column (String, nullable=False)
-    password = Column (String, nullable=False)
-    role= Column (String(10), nullable=False)
+    __tablename__ = "users"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(unique=True)
+    hashed_password: Mapped[str] = mapped_column()
+    username: Mapped[str] = mapped_column(String(32), unique=True)
+    firist_name: Mapped[str] = mapped_column(String(32))
+    last_name: Mapped[str] = mapped_column(String(32))
