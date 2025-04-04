@@ -19,10 +19,9 @@ DB_PORT = os.getenv("DB_PORT")
 DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 # DATABASE_URL = "postgresql+psycopg2://postgres:password@localhost:5432/fastapi_db"
 
-SQLALCHEMY_DATABASE_URL = DATABASE_URL
 Base = declarative_base()
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(bind=engine) 
 

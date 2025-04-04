@@ -1,13 +1,12 @@
 from typing import Annotated
 from sqlalchemy.orm import sessionmaker, Session
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import declarative_base  
 from fastapi import Depends
-from app.database import SessionLocal
 
-Base = declarative_base()
+Base = declarative_base()  
 
 def get_db():
-    db = SessionLocal()
+    db = SessionLocal()  # type: ignore
     try:
         yield db
     finally:
