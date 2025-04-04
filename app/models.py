@@ -3,7 +3,6 @@ from sqlalchemy import ForeignKey, String, Integer  # Fixed import
 from sqlalchemy.orm import mapped_column, Mapped, reconstructor, relationship
 from datetime import datetime, date, timezone, time
 from sqlalchemy import Date
-from sqlalchemy.orm import relationship
 
 from app.database import Base
 
@@ -41,10 +40,12 @@ class Game(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    owner_id: Mapped[int] = mapped_column(
-        Integer,  # To'g'ri ishlatilgan
-        ForeignKey("users.id"),
-        nullable=True
-    )
-    owner: Mapped[Optional["User"]] = relationship("User")
-    topic_id: Mapped[int] = mapped_column()
+owner_id: Mapped[int] = mapped_column(
+    Integer,  # To'g'ri ishlatilgan
+    ForeignKey("users.id"),
+    nullable=True
+)
+
+
+owner: Mapped[Optional["User"]] = relationship("User")  # Fixed typo
+topic_id: Mapped[int] = mapped_column()
