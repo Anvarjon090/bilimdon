@@ -16,7 +16,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(unique=True)
     hashed_password: Mapped[str] = mapped_column()
     username: Mapped[str] = mapped_column(String(32), unique=True)
-    firist_name: Mapped[str] = mapped_column(String(32))
+    first_name: Mapped[str] = mapped_column(String(32))
     last_name: Mapped[str] = mapped_column(String(32))
     birthdate: Mapped[str] = mapped_column(Date)
     joined_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)

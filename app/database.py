@@ -1,8 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
-from typing import Annotated
-from fastapi import Depends
 
 from dotenv import load_dotenv
 import os
@@ -23,5 +21,4 @@ Base = declarative_base()
 
 engine = create_engine(DATABASE_URL)
 
-SessionLocal = sessionmaker(bind=engine) 
-
+SessionLocal = sessionmaker(bind=engine)
