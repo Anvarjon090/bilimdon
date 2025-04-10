@@ -1,10 +1,11 @@
 from fastapi import APIRouter, HTTPException, Response
 
 from app.database  import * 
-from app.schemas.auth import *
+from app.schema.auth import AuthLogin, AuthRegistration, AuthRegistrationResponse
+from app.schemas.auth import * # type: ignore
 from app.models import User
 from app.utils import *
-from app.dependencies import *
+from app.dependencies import * # type: ignore
 
 
 router = APIRouter()

@@ -5,7 +5,7 @@ from jose import JWTError, jwt
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi import Request, HTTPException, Depends
 
-from app.dependencies import db_dep
+from app.deppendencies import db_dep
 from app.models import User
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
