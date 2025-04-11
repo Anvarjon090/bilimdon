@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Response
 
 from app.database  import * 
 from app.schemas.model_schema import QuestionResponse , QuestionRequest
-from app.models import Question
+from app.models import Question, Topic
 from datetime import datetime
 from app.deppendencies import *
 from typing import List
@@ -11,28 +11,30 @@ from typing import List
 
 router = APIRouter(tags=["Question"])
 
-
+ 
 @router.post('/question', response_model=QuestionResponse)
 async def create_question(
     db: db_dep, 
     question: QuestionRequest
 ):
-    question = Question(
+    # topic_id mavjudligini tekshirish
+    topic = db.query(Topic).filter(Topic.id == question.topic_id).first()
+    if not topic:
+        raise HTTPException(status_code=404, detail="Topic not found")
+
+    # Yangi question yaratish
+    new_question = Question(
         owner_id=question.owner_id,
         title=question.title,
         description=question.description,
-        topic_id = question.topic_id,
-
+        topic_id=question.topic_id,
     )
 
-    db.add(question)
+    db.add(new_question)
     db.commit()
-    db.refresh(question)
+    db.refresh(new_question)
 
-    return question
-
-
-
+    return new_question
 
 @router.get('/question', response_model=List[QuestionResponse])
 async def get_all(

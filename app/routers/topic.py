@@ -1,7 +1,8 @@
+from typing import List
 from fastapi import APIRouter, HTTPException, Response
 
 from app.database  import * 
-from app.schemas.model_schema import TopicRequest
+from app.schemas.model_schema import TopicRequest, TopicResponse
 from app.models import Question , Topic
 
 from app.deppendencies import *
@@ -10,7 +11,16 @@ from app.deppendencies import *
 router = APIRouter(tags=["Topic"])
 
 
-@router.post('/topic', response_model=TopicRequest)
+@router.get('/topic', response_model=List[TopicResponse]) 
+async def get_all(
+    db: db_dep, 
+):
+    topic = db.query(Topic).all()
+
+    return topic
+
+
+@router.post('/topic', response_model=TopicResponse)
 async def create_topic(
     db: db_dep, 
     topic: TopicRequest
