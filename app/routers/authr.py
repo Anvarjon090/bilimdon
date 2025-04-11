@@ -7,7 +7,7 @@ from app.utils import *
 from app.deppendencies import *
 
 
-router = APIRouter()
+router = APIRouter(tags=["Auth"])
 
 
 @router.post('/registration', response_model=AuthRegistrationResponse)
@@ -47,7 +47,7 @@ async def login(
         user: AuthLogin
     ):
     db_user = db.query(User).filter(User.email == user.email).first()
-    is_correct = verify_password(user.password, db_user.hashed_password)
+    is_correct = verify_password(user.password, db_user.hashed_password) if db_user else False
 
     if not db_user or not is_correct:
         raise HTTPException(
@@ -64,3 +64,8 @@ async def login(
         "refresh_token": refresh_token,
         "token_type": "Bearer"
     }
+
+
+@router.get("/test")
+async def test():
+    return {"Hello": "World"}
