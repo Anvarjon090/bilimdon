@@ -14,9 +14,7 @@ app = FastAPI()
 
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+
 
 app.include_router(auth_router)
 app.include_router(question_router)

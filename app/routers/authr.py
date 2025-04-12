@@ -10,6 +10,8 @@ from app.deppendencies import *
 router = APIRouter(tags=["Auth"])
 
 
+
+
 @router.post('/registration', response_model=AuthRegistrationResponse)
 async def registration(
     db: db_dep, 
