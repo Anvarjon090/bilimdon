@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException, Response
 from app.database import *
-from app.schemas.model_schema import OptionResponse, OptionRequest
-from app.models import Option, Question
+from app.schemas.option import OptionResponse, OptionRequest
+from app.models.option import Option  # type: ignore
+from app.models.question import Question  # type: ignore
 
 from app.deppendencies import *
 from typing import List

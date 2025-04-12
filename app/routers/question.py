@@ -1,8 +1,9 @@
 from fastapi import APIRouter, HTTPException, Response
 
 from app.database  import * 
-from app.schemas.model_schema import QuestionResponse , QuestionRequest
-from app.models import Question, Topic
+from app.schemas.quetion import QuestionResponse , QuestionRequest
+from app.models.question import Question # type: ignore
+from app.models.topic import Topic # type: ignore
 from datetime import datetime
 from app.deppendencies import *
 from typing import List
