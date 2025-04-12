@@ -3,7 +3,8 @@ from fastapi import APIRouter, HTTPException, Response
 
 from app.database  import * 
 from app.schemas.topic import TopicResponse , TopicRequest
-from app.models.topic import Topic # type: ignore
+from app.models import Question , Topic
+
 from app.deppendencies import *
 
 

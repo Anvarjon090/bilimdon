@@ -11,7 +11,7 @@ class GameRequest(BaseModel):
     score: int
 
 
-class GameRequest(BaseModel):
+class GameResponse(BaseModel):
     owner_id: int
     title: str
     description: str

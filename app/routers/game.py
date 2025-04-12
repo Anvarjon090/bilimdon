@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException, Response
 
 from app.database  import *
 from app.schemas.game import GameResponse, GameRequest
-from app.models.game import Game # type: ignore
-from app.deppendencies import *
+from app.models import Game
+from app.deppendencies import db_dep
 from typing import List
 from datetime import datetime
 

@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Response
 
 from app.database  import * 
 from app.schemas.auth import *
-from app.models.user import User # type: ignore
+from app.models import User
 from app.utils import *
 from app.deppendencies import *
 
