@@ -28,7 +28,7 @@ async def create_game(
     game: GameRequest
 ):
     new_game = Game(
-        **game.dict(),
+        **game.model_dump(),
         start_time=datetime.now(), 
         end_time=datetime.now()    
     )
