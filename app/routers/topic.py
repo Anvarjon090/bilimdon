@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, HTTPException
 
 from app.database  import * 
 from app.schemas.topic import TopicResponse , TopicRequest
@@ -24,9 +24,17 @@ async def get_all(
 async def create_topic(
     db: db_dep, 
     topic: TopicRequest
-   ):
-    new_topic = Topic(**topic.dict())
+):
 
+    existing_topic = db.query(Topic).filter(Topic.name == topic.name).first()
+    if existing_topic:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Topic with name '{topic.name}' already exists."
+        )
+
+
+    new_topic = Topic(**topic.model_dump())
     db.add(new_topic)
     db.commit()
     db.refresh(new_topic)
