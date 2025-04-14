@@ -23,7 +23,12 @@ class User(Base):
     is_superuser: Mapped[bool] = mapped_column(default=False)
 
     owned_games: Mapped[List["Game"]] = relationship(back_populates="owner")
-    submissions: Mapped[List["Submission"]] = relationship(back_populates="owner")
+
+    # Submission.owner bilan bog‘lanadi
+    submissions: Mapped[List["Submission"]] = relationship(
+        back_populates="owner", foreign_keys="Submission.owner_id"
+    )
+
     participations: Mapped[List["Participation"]] = relationship(back_populates="user")
 
 
@@ -53,6 +58,9 @@ class Game(Base):
     questions: Mapped[List["GameQuestion"]] = relationship(back_populates="game")
     topic: Mapped["Topic"] = relationship("Topic", back_populates="games")
     participations: Mapped[List["Participation"]] = relationship(back_populates="game")
+    submissions: Mapped[List["Submission"]] = relationship("Submission", back_populates="game")
+
+
 
 
 class GameQuestion(Base):
@@ -61,6 +69,7 @@ class GameQuestion(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     game_id: Mapped[int] = mapped_column(Integer, ForeignKey("games.id"))
     question_id: Mapped[int] = mapped_column(Integer, ForeignKey("questions.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(timezone.utc))
 
     question: Mapped["Question"] = relationship(back_populates="games")
     game: Mapped["Game"] = relationship(back_populates="questions")
@@ -132,13 +141,16 @@ submission1.question
 class Submission(Base):
     __tablename__ = "submissions"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
     question_id: Mapped[int] = mapped_column(Integer, ForeignKey("questions.id"))
     option_id: Mapped[int] = mapped_column(Integer, ForeignKey("options.id"))
+    game_id: Mapped[int] = mapped_column(Integer, ForeignKey("games.id"))
     is_correct: Mapped[bool] = mapped_column(Boolean, default=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(timezone.utc))
-
-    owner = relationship("User", back_populates="submissions")
-    question = relationship("Question", back_populates="submissions")
-    option = relationship("Option", back_populates="submissions")
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    owner_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
+    game: Mapped["Game"] = relationship("Game", back_populates="submissions")
+    user: Mapped["User"] = relationship("User", foreign_keys=[user_id])
+    owner: Mapped["User"] = relationship("User", back_populates="submissions", foreign_keys=[owner_id])
+    question: Mapped["Question"] = relationship("Question", back_populates="submissions")
+    option: Mapped["Option"] = relationship("Option", back_populates="submissions")

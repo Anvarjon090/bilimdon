@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 
 from app.database  import * 
 from app.schemas.topic import TopicResponse , TopicRequest
-from app.models import Question , Topic
+from app.models import Topic
 
 from app.deppendencies import *
 

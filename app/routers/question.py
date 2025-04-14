@@ -18,12 +18,12 @@ async def create_question(
     db: db_dep, 
     question: QuestionRequest
 ):
-    # topic_id mavjudligini tekshirish
+    
     topic = db.query(Topic).filter(Topic.id == question.topic_id).first()
     if not topic:
         raise HTTPException(status_code=404, detail="Topic not found")
 
-    # Yangi question yaratish
+
     new_question = Question(
         owner_id=question.owner_id,
         title=question.title,

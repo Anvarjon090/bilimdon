@@ -1,8 +1,9 @@
 from fastapi import APIRouter, HTTPException, Response
 from app.database import *
+from app.models import Question
 from app.schemas.option import OptionResponse, OptionRequest
-from app.models import Option, Question
-
+from app.models import Option
+from app.models import Option
 from app.deppendencies import *
 from typing import List
 

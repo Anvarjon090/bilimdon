@@ -5,6 +5,7 @@ from app.schemas.auth import *
 from app.models import User
 from app.utils import *
 from app.deppendencies import *
+from app.models import User
 
 
 router = APIRouter(tags=["Auth"])
@@ -68,6 +69,9 @@ async def login(
     }
 
 
-@router.get("/test")
-async def test():
-    return {"Hello": "World"}
+@router.get('/All_User')
+async def get_all_user(
+    db: db_dep, 
+):
+    users = db.query(User).all()
+    return users

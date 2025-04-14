@@ -13,9 +13,10 @@ class QuestionRequest(BaseModel):
 class QuestionResponse(BaseModel):
     id: int
     owner_id: int
+    topic_id: int
     title: str
     description: str
-    topic_id: int
+
     created_at: datetime
     updated_at: datetime
 

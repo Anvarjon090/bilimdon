@@ -6,6 +6,7 @@ from app.models import Game
 from app.deppendencies import db_dep
 from typing import List
 from datetime import datetime
+from app.models import User
 
 
 router = APIRouter(tags=["Game"])
