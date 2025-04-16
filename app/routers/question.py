@@ -1,12 +1,14 @@
 from fastapi import APIRouter, HTTPException, Response
 
 from app.database  import * 
-from app.schemas.quetion import QuestionResponse , QuestionRequest
+from app.schemas.question import QuestionResponse, QuestionRequest
 from app.models import Question 
 from app.models import Topic 
 from datetime import datetime
-from app.deppendencies import *
+from app.dependencies import *
 from typing import List
+from app.dependencies import db_dep
+
 
 
 
@@ -15,7 +17,7 @@ router = APIRouter(tags=["Question"])
  
 @router.post('/question', response_model=QuestionResponse)
 async def create_question(
-    db: db_dep, 
+    db: db_dep,  # type: ignore
     question: QuestionRequest
 ):
     
@@ -39,7 +41,7 @@ async def create_question(
 
 @router.get('/question', response_model=List[QuestionResponse])
 async def get_all(
-    db: db_dep, 
+    db: db_dep,  # type: ignore
 ):
     question = db.query(Question).all()
 
@@ -50,7 +52,7 @@ async def get_all(
 
 @router.put('/question/{id}', response_model=QuestionResponse)
 async def update_question(
-    db: db_dep, 
+    db: db_dep,  # type: ignore
     id: int, 
     question: QuestionRequest
 ):

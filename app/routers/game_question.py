@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from app.database import *
 from app.schemas.game import GameQuestionResponse, GameQuestionRequest
 from app.models import GameQuestion
-from app.deppendencies import *
+from app.dependencies import *
 from typing import List
 
 

@@ -4,7 +4,7 @@ from app.models import Question
 from app.schemas.option import OptionResponse, OptionRequest
 from app.models import Option
 from app.models import Option
-from app.deppendencies import *
+from app.dependencies import *
 from typing import List
 
 

@@ -2,9 +2,9 @@ from fastapi import APIRouter, HTTPException
 from app.database import *
 from app.schemas.submission import SubmissionResponse, SubmissionRequest
 from app.models import Submission
-from app.deppendencies import *
+from app.dependencies import *
 from typing import List
-from sqlalchemy.orm import Session
+from app.models import Submission
 
 
 

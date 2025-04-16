@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Response
 from app.database  import *
 from app.schemas.game import GameResponse, GameRequest
 from app.models import Game
-from app.deppendencies import db_dep
+from app.dependencies import db_dep
 from typing import List
 from datetime import datetime
 from app.models import User

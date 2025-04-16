@@ -4,7 +4,7 @@ from app.database  import *
 from app.schemas.auth import *
 from app.models import User
 from app.utils import *
-from app.deppendencies import *
+from app.dependencies import *
 from app.models import User
 
 
@@ -71,7 +71,9 @@ async def login(
 
 @router.get('/All_User')
 async def get_all_user(
-    db: db_dep, 
+    db: db_dep
 ):
-    users = db.query(User).all()
+    query = db.query(User)
+    users = query.all()
+
     return users

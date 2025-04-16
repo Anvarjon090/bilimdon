@@ -1,11 +1,11 @@
-from passlib.context import CryptContext
+from passlib.context import CryptContext 
 from datetime import timedelta, datetime, timezone
 from jose import JWTError, jwt
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi import Request, HTTPException, Depends
 
-from app.deppendencies import db_dep
+from app.dependencies import db_dep
 from app.models import User
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -20,8 +20,11 @@ def hash_password(password:str):
     return pwd_context.hash(password)
 
 def verify_password(plain_password, hashed_password):
-    print(">>>", hash_password(plain_password), hashed_password)
-    return pwd_context.verify(plain_password, hashed_password)
+    plain_password = "example_password"
+    hashed_password = pwd_context.hash(plain_password)
+
+    print("Hashed Password:", hashed_password)
+    print("Password Verified:", pwd_context.verify(plain_password, hashed_password))
 
 
 def create_access_token(data: dict, expires_delta: float = None):

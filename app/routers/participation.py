@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 from app.database import *
 from app.schemas.participation import ParticipationResponse, ParticipationRequest
 from app.models import Participation
-from app.deppendencies import *
+from app.dependencies import *
 from typing import List
 from sqlalchemy.orm import Session
 
@@ -38,9 +38,9 @@ async def create_participation(
         user_id=participation.user_id,
         game_id=participation.game_id,
         gained_score=participation.gained_score,
-        start_time=datetime.utcnow(), # type: ignore
-        end_time=datetime.utcnow(),
-        registered_at=datetime.utcnow()
+        start_time=datetime.utc(), 
+        end_time=datetime.utc(),
+        registered_at=datetime.utc()
     )
     db.add(new_participation)
     db.commit()

@@ -5,7 +5,7 @@ from app.database  import *
 from app.schemas.topic import TopicResponse , TopicRequest
 from app.models import Topic
 
-from app.deppendencies import *
+from app.dependencies import *
 
 
 router = APIRouter(tags=["Topic"])

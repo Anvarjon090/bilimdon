@@ -20,7 +20,7 @@ class Base(DeclarativeBase):
     pass
 
 
-DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/blmdon2"
+DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 # DATABASE_URL = "postgresql+psycopg2://postgres:password@localhost:5432/fastapi_db"
 
 Base = declarative_base()
@@ -28,3 +28,5 @@ Base = declarative_base()
 engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(bind=engine)
+
+

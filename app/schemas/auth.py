@@ -1,9 +1,13 @@
 from pydantic import BaseModel, EmailStr
 
 class AuthRegistration(BaseModel):
+    last_name: str
+    frist_name: str
+    birthdate: int
     email: EmailStr
     password: str
-
+    is_staff: bool
+    is_superuser:bool
 class AuthRegistrationResponse(BaseModel):
     id: int
     email: EmailStr
@@ -12,5 +16,8 @@ class AuthRegistrationResponse(BaseModel):
     is_superuser: bool
 
 class AuthLogin(BaseModel):
+    last_name:str
+    frist_name:str
+    birthdate:str
     email: str
     password: str
