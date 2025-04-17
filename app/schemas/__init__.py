@@ -5,3 +5,4 @@ from .topic import *
 from .game import *
 from .participation import *
 from .submission import *
+from .huma import *

@@ -16,8 +16,5 @@ class AuthRegistrationResponse(BaseModel):
     is_superuser: bool
 
 class AuthLogin(BaseModel):
-    last_name:str
-    frist_name:str
-    birthdate:str
     email: str
     password: str
