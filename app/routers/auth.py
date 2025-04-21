@@ -5,12 +5,9 @@ from app.schemas.auth import *
 from app.models import User
 from app.utils import *
 from app.dependencies import *
-from app.models import User
 
 
-router = APIRouter(tags=["Auth"])
-
-
+router = APIRouter()
 
 
 @router.post('/registration', response_model=AuthRegistrationResponse)
@@ -45,10 +42,7 @@ async def registration(
 
 
 @router.post('/login')
-async def login(
-        db: db_dep, 
-        user: AuthLogin
-    ):
+async def login(db: db_dep, user: AuthLogin):
     db_user = db.query(User).filter(User.email == user.email).first()
     is_correct = verify_password(user.password, db_user.hashed_password) if db_user else False
 

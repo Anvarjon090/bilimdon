@@ -55,8 +55,8 @@ async def update_participation(
 ):
     existing_participation = db.query(Participation).filter(Participation.id == id).first()
 
-    if not existing_participation:
-        raise HTTPException(status_code=404, detail="Participation not found")
+    # if not existing_participation:
+    #     raise HTTPException(status_code=404, detail="Participation not found")
 
     existing_participation.game_id = participation.game_id
     existing_participation.user_id = participation.user_id
@@ -64,20 +64,4 @@ async def update_participation(
 
     db.commit()
     db.refresh(existing_participation)
-
-
-
-@router.delete('/participation/{id}')
-async def delete_participation(
-    db: db_dep,
-    id: int
-):
-    existing_participation = db.query(Participation).filter(Participation.id == id).first()
-
-    if not existing_participation:
-        raise HTTPException(status_code=404, detail="Participation not found")
-
-    db.delete(existing_participation)
-    db.commit()
-
-    return {"message": f"Participation with id {id} deleted successfully"}
+    

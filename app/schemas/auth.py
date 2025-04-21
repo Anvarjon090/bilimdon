@@ -1,4 +1,8 @@
+from tokenize import Special
 from pydantic import BaseModel, EmailStr
+from sqlalchemy import Boolean, Integer, Table
+from piccolo.columns import Varchar
+
 
 class AuthRegistration(BaseModel):
     last_name: str
@@ -18,3 +22,8 @@ class AuthRegistrationResponse(BaseModel):
 class AuthLogin(BaseModel):
     email: str
     password: str
+
+
+
+
+

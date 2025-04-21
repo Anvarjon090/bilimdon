@@ -5,7 +5,7 @@ from typing import Optional
 
 class ParticipationRequest(BaseModel):
     user_id: int
-    game_id: int
+    
     gained_score: int
 
 

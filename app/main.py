@@ -1,43 +1,68 @@
+from fastapi import FastAPI
+from fastapi.openapi.utils import get_openapi
+from starlette_admin.contrib.sqla import ModelView, Admin
+
 from typing import Union
 import time
 from datetime import datetime
 
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
-
-from piccolo_admin.endpoints import create_admin
-from app.tables import Book  
-from app import settings
-
-
-from app.routers.authr import router as auth_router
-from app.routers.topic import router as topic_router
+from app.routers.auth import router as auth_router
 from app.routers.question import router as question_router
-
-from app.routers.options import router as option_router
+from app.routers.option import router as option_router
+from app.routers.topic import router as topic_router
 from app.routers.game import router as game_router
-from app.routers.game_question import router as game_question_router
-from app.routers.submission import router as submission_router
-from app.routers.participation import router as participation_router
-from app.routers.huma import router as huma_router
-from db.connect_to_db import connect_to_db
+from app.routers.participation import router as p_router
+from app.routers.submission import router as sub_router
+from app.database import engine
+from app.models import User
+from app.admin.settings import admin
 
 
-#admin
-app = FastAPI(title=settings.PROJECT_NAME)
+app = FastAPI()
 
 
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
 
 app.include_router(auth_router)
-app.include_router(topic_router)
 app.include_router(question_router)
-# Middleware for logging request and response
 app.include_router(option_router)
+app.include_router(topic_router)
 app.include_router(game_router)
-app.include_router(game_question_router)
-app.include_router(submission_router)
-app.include_router(participation_router)
-app.include_router(huma_router)
+app.include_router(p_router)
+app.include_router(sub_router)
 
-#admin 
-app.mount(settings.ADMIN_URL, create_admin([Book]))
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+
+    openapi_schema = get_openapi(
+        title="Bilimdon Clone API",
+        version="0.0.1",
+        description="API with JWT-based Authentication",
+        routes=app.routes,
+    )
+
+    openapi_schema["components"]["securitySchemes"] = {
+        "BearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT",
+        }
+    }
+
+    for path in openapi_schema["paths"].values():
+        for method in path.values():
+            method.setdefault("security", []).append({"BearerAuth": []})
+
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
+
+
+admin.mount_to(app=app)
+

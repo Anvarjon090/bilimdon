@@ -1,8 +1,16 @@
+from fastapi import Request
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-from sqlalchemy import String, DateTime, Date, Integer, Boolean, ForeignKey
+from sqlalchemy import String, DateTime, Date, Integer, Boolean, ForeignKey, Table
 
 from datetime import datetime, date, timezone
 from typing import Optional, List
+
+
+
+
+
+
+
 
 from app.database import Base
 
@@ -24,12 +32,16 @@ class User(Base):
 
     owned_games: Mapped[List["Game"]] = relationship(back_populates="owner")
 
-    # Submission.owner bilan bog‘lanadi
+
     submissions: Mapped[List["Submission"]] = relationship(
         back_populates="owner", foreign_keys="Submission.owner_id"
     )
 
     participations: Mapped[List["Participation"]] = relationship(back_populates="user")
+
+
+    async def __admin_repr__(self, request: Request):
+        return f"{self.last_name} {self.first_name}"
 
 
 
@@ -38,7 +50,6 @@ class Topic(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), unique=True)
-
     games: Mapped[List["Game"]] = relationship(back_populates="topic")
 
 
@@ -154,3 +165,8 @@ class Submission(Base):
     owner: Mapped["User"] = relationship("User", back_populates="submissions", foreign_keys=[owner_id])
     question: Mapped["Question"] = relationship("Question", back_populates="submissions")
     option: Mapped["Option"] = relationship("Option", back_populates="submissions")
+
+
+
+
+
